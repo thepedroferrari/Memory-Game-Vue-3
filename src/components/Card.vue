@@ -13,12 +13,17 @@ export default {
       type: Number,
       required: true,
     },
+    matched: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   setup(props, context) {
     const selectCard = () => {
       context.emit("select-card", {
         position: props.position,
+        faceValue: props.value,
       });
     };
 

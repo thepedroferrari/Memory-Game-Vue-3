@@ -4,6 +4,7 @@
     <Card
       v-for="card in deck"
       :key="`${card.id}`"
+      :matched="card.matched"
       :value="`${card.value}`"
       :visible="card.visible"
       :position="card.position"
@@ -23,7 +24,7 @@ import Card from "./components/Card";
 // import theHunter from "./assets/images/theHunter.jpg";
 // import theHunter2 from "./assets/images/TheHunter2.jpg";
 
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 export default {
   name: "App",
@@ -33,6 +34,8 @@ export default {
 
   setup() {
     const deck = ref([]);
+    const matches = ref([]);
+    const status = ref("");
 
     for (let i = 0; i < 16; i += 1) {
       deck.value.push({
@@ -40,16 +43,50 @@ export default {
         value: i,
         position: i,
         visible: false,
+        matched: false,
       });
     }
 
     const flipCard = (payload) => {
       deck.value[payload.position].visible = true;
+
+      if (matches.value[0]) {
+        matches.value[1] = payload;
+      } else {
+        matches.value[0] = payload;
+      }
     };
 
+    watch(
+      matches,
+      (cards) => {
+        if (cards.length === 2) {
+          const [card1, card2] = cards;
+
+          if (card1.faceValue === card2.faceValue) {
+            // CARDS MATCH
+            status.value = "Match";
+            deck.value[card1.position].matched = false;
+            deck.value[card2.position].matched = false;
+          } else {
+            // CARDS MISMATCH
+            status.value = "Mismatch";
+
+            setTimeout(() => {
+              deck.value[card1.position].visible = false;
+              deck.value[card2.position].visible = false;
+              matches.value.length = 0;
+            }, 500);
+          }
+        }
+      },
+      { deep: true }
+    );
     return {
       deck,
       flipCard,
+      matches,
+      status,
     };
   },
 };
