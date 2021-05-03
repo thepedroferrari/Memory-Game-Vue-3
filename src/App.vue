@@ -17,6 +17,7 @@
 
 <script>
 import { computed, ref, watch } from "vue";
+
 import Card from "./components/Card";
 import _shuffle from "lodash.shuffle";
 // import genZ from "./assets/images/GenZ.jpg";
@@ -66,15 +67,32 @@ export default {
       }));
     };
 
-    for (let i = 0; i < 16; i += 1) {
+    [
+      "GenZ-card1",
+      "GenZ-card2",
+      "JustCause3-card1",
+      "JustCause3-card2",
+      "JustCause4-card1",
+      "JustCause4-card2",
+      "MadMax-card1",
+      "MadMax-card2",
+      "Rage2-card1",
+      "Rage2-card2",
+      "SecondExtinction-card1",
+      "SecondExtinction-card2",
+      "theHunter-card1",
+      "theHunter-card2",
+      "TheHunter2-card1",
+      "TheHunter2-card2",
+    ].forEach((card, index) => {
       deck.value.push({
-        id: i,
-        value: i,
-        position: i,
+        id: card,
+        value: card.split("-")[0],
+        position: index,
         visible: false,
         matched: false,
       });
-    }
+    });
 
     const flipCard = (payload) => {
       deck.value[payload.position].visible = true;
