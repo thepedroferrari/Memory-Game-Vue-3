@@ -12,11 +12,13 @@
     />
   </section>
   {{ status }}
+  <button @click="shuffleCards">Shuffle Cards</button>
 </template>
 
 <script>
 import { computed, ref, watch } from "vue";
 import Card from "./components/Card";
+import _shuffle from "lodash.shuffle";
 // import genZ from "./assets/images/GenZ.jpg";
 // import justCause3 from "./assets/images/JustCause3.jpg";
 // import justCause4 from "./assets/images/JustCause4.jpg";
@@ -49,10 +51,14 @@ export default {
       () => deck.value.filter((c) => c.matched === false).length / 2
     );
 
+    const shuffleCards = () => {
+      deck.value = _shuffle(deck.value);
+    };
+
     for (let i = 0; i < 16; i += 1) {
       deck.value.push({
         id: i,
-        value: 8,
+        value: i,
         position: i,
         visible: false,
         matched: false,
@@ -99,6 +105,7 @@ export default {
       matches,
       remainingPairs,
       status,
+      shuffleCards,
     };
   },
 };
