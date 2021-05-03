@@ -3,17 +3,19 @@
   <section class="game-board">
     <Card
       v-for="card in deck"
-      :key="`${card.id}`"
+      :key="card.id"
       :matched="card.matched"
-      :value="`${card.value}`"
+      :value="card.value"
       :visible="card.visible"
       :position="card.position"
       @select-card="flipCard"
     />
   </section>
+  {{ status }}
 </template>
 
 <script>
+import { computed, ref, watch } from "vue";
 import Card from "./components/Card";
 // import genZ from "./assets/images/GenZ.jpg";
 // import justCause3 from "./assets/images/JustCause3.jpg";
@@ -24,8 +26,6 @@ import Card from "./components/Card";
 // import theHunter from "./assets/images/theHunter.jpg";
 // import theHunter2 from "./assets/images/TheHunter2.jpg";
 
-import { ref, watch } from "vue";
-
 export default {
   name: "App",
   components: {
@@ -35,12 +35,24 @@ export default {
   setup() {
     const deck = ref([]);
     const matches = ref([]);
-    const status = ref("");
+
+    const status = computed(() => {
+      console.log("Read");
+      if (remainingPairs.value === 0) {
+        return "Player Wins!";
+      } else {
+        return `Remaining Pairs: ${remainingPairs.value}`;
+      }
+    });
+
+    const remainingPairs = computed(
+      () => deck.value.filter((c) => c.matched === false).length / 2
+    );
 
     for (let i = 0; i < 16; i += 1) {
       deck.value.push({
         id: i,
-        value: i,
+        value: 8,
         position: i,
         visible: false,
         matched: false,
@@ -64,28 +76,28 @@ export default {
           const [card1, card2] = cards;
 
           if (card1.faceValue === card2.faceValue) {
-            // CARDS MATCH
-            status.value = "Match";
-            deck.value[card1.position].matched = false;
-            deck.value[card2.position].matched = false;
+            status.value = "Matched!";
+            deck.value[card1.position].matched = true;
+            deck.value[card2.position].matched = true;
           } else {
-            // CARDS MISMATCH
-            status.value = "Mismatch";
-
+            status.value = "Mismatch!";
             setTimeout(() => {
               deck.value[card1.position].visible = false;
               deck.value[card2.position].visible = false;
-              matches.value.length = 0;
             }, 500);
           }
+
+          matches.value.length = 0;
         }
       },
       { deep: true }
     );
+
     return {
       deck,
       flipCard,
       matches,
+      remainingPairs,
       status,
     };
   },
