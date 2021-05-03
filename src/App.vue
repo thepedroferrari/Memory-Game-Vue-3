@@ -12,7 +12,7 @@
     />
   </section>
   {{ status }}
-  <button @click="shuffleCards">Shuffle Cards</button>
+  <button @click="restartGame">Restart Game</button>
 </template>
 
 <script>
@@ -55,6 +55,17 @@ export default {
       deck.value = _shuffle(deck.value);
     };
 
+    const restartGame = () => {
+      shuffleCards();
+
+      deck.value = deck.value.map((card, index) => ({
+        ...card,
+        matched: false,
+        visible: false,
+        position: index,
+      }));
+    };
+
     for (let i = 0; i < 16; i += 1) {
       deck.value.push({
         id: i,
@@ -82,11 +93,9 @@ export default {
           const [card1, card2] = cards;
 
           if (card1.faceValue === card2.faceValue) {
-            status.value = "Matched!";
             deck.value[card1.position].matched = true;
             deck.value[card2.position].matched = true;
           } else {
-            status.value = "Mismatch!";
             setTimeout(() => {
               deck.value[card1.position].visible = false;
               deck.value[card2.position].visible = false;
@@ -105,7 +114,7 @@ export default {
       matches,
       remainingPairs,
       status,
-      shuffleCards,
+      restartGame,
     };
   },
 };
