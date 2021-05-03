@@ -65,6 +65,7 @@ export default {
         visible: false,
         position: index,
       }));
+      matches.value.length = 0;
     };
 
     [
@@ -96,6 +97,17 @@ export default {
 
     const flipCard = (payload) => {
       deck.value[payload.position].visible = true;
+      console.log(payload);
+      if (
+        matches.value.find(
+          (card) =>
+            card.position === payload.position &&
+            card.faceValue === payload.faceValue
+        )
+      ) {
+        console.log("THEY ARE EQUAL", matches.value, payload);
+        return;
+      }
 
       if (matches.value[0]) {
         matches.value[1] = payload;
