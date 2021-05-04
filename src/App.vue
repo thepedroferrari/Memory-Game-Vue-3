@@ -1,6 +1,6 @@
 <template>
   <h1 class="title">Vue Memory Game</h1>
-  <section class="game-board">
+  <transition-group tag="section" class="game-board">
     <Card
       v-for="card in deck"
       :key="card.id"
@@ -10,7 +10,7 @@
       :position="card.position"
       @select-card="flipCard"
     />
-  </section>
+  </transition-group>
   {{ status }}
   <button class="default-button" @click="restartGame">Restart Game</button>
 </template>
