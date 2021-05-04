@@ -12,7 +12,7 @@
     />
   </section>
   {{ status }}
-  <button @click="restartGame">Restart Game</button>
+  <button class="default-button" @click="restartGame">Restart Game</button>
 </template>
 
 <script>
@@ -146,19 +146,8 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 
-.game-board {
-  display: grid;
-  grid-template-columns: repeat(4, 100px);
-  grid-template-rows: repeat(4, 100px);
-  gap: 20px;
-  justify-content: center;
+  margin-top: 60px;
 }
 </style>

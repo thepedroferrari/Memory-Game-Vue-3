@@ -35,8 +35,12 @@ export default {
 
 <template>
   <div class="card" @click="selectCard">
-    <div v-if="visible" class="card-face is-front">{{ value }}</div>
-    <div v-else class="card-face is-back">Back</div>
+    <div
+      v-if="visible"
+      class="card-face is-front"
+      :style="`background-image: url('/images/${value}.jpg`"
+    ></div>
+    <div v-else class="card-face is-back"></div>
   </div>
 </template>
 
@@ -44,7 +48,7 @@ export default {
 
 <style>
 .card {
-  border: 5px solid #ccc;
+  border: 1px solid var(--color-violet-light);
   position: relative;
 }
 
@@ -52,14 +56,12 @@ export default {
   width: 100%;
   height: 100%;
   position: absolute;
+  background-size: cover;
 }
 
 .card-face.is-front {
-  background-color: red;
-  color: white;
 }
 .card-face.is-back {
-  background-color: blue;
-  color: white;
+  background-image: url("/images/AvalancheLogo.jpg");
 }
 </style>
