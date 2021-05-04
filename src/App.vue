@@ -1,5 +1,5 @@
 <template>
-  <h1>Vue Memory Game</h1>
+  <h1 class="title">Vue Memory Game</h1>
   <section class="game-board">
     <Card
       v-for="card in deck"
@@ -20,14 +20,8 @@ import { computed, ref, watch } from "vue";
 
 import Card from "./components/Card";
 import _shuffle from "lodash.shuffle";
-// import genZ from "./assets/images/GenZ.jpg";
-// import justCause3 from "./assets/images/JustCause3.jpg";
-// import justCause4 from "./assets/images/JustCause4.jpg";
-// import madMax from "./assets/images/MadMax.jpg";
-// import rage2 from "./assets/images/Rage2.jpg";
-// import secondExtinction from "./assets/images/SecondExtinction.jpg";
-// import theHunter from "./assets/images/theHunter.jpg";
-// import theHunter2 from "./assets/images/TheHunter2.jpg";
+import "./assets/theme.css";
+import "./assets/classes.css";
 
 export default {
   name: "App",
