@@ -1,4 +1,5 @@
 <script>
+import { computed } from "@vue/runtime-core";
 export default {
   props: {
     value: {
@@ -20,6 +21,9 @@ export default {
   },
 
   setup(props, context) {
+    const flippedStyles = computed(() => {
+      if (props.visible) return "is-flipped";
+    });
     const selectCard = () => {
       context.emit("select-card", {
         position: props.position,
@@ -27,20 +31,19 @@ export default {
       });
     };
 
-    return { selectCard };
+    return { flippedStyles, selectCard };
   },
 };
 </script>
 
 
 <template>
-  <div class="card" @click="selectCard">
+  <div class="card" :class="flippedStyles" @click="selectCard">
     <div
-      v-if="visible"
       class="card-face is-front"
       :style="`background-image: url('/images/${value}.jpg`"
     ></div>
-    <div v-else class="card-face is-back"></div>
+    <div class="card-face is-back"></div>
   </div>
 </template>
 
@@ -48,8 +51,13 @@ export default {
 
 <style>
 .card {
-  border: 1px solid var(--color-violet-light);
   position: relative;
+  transition: 350ms transform ease-in;
+  transform-style: preserve-3d;
+}
+
+.card.is-flipped {
+  transform: rotateY(180deg);
 }
 
 .card-face {
@@ -57,11 +65,14 @@ export default {
   height: 100%;
   position: absolute;
   background-size: cover;
+  border-radius: 10px;
+  backface-visibility: hidden;
 }
 
-.card-face.is-front {
-}
 .card-face.is-back {
   background-image: url("/images/AvalancheLogo.jpg");
+}
+.card-face.is-front {
+  transform: rotateY(180deg);
 }
 </style>

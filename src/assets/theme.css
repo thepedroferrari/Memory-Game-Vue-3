@@ -85,7 +85,7 @@ body {
   letter-spacing: var(--text-spacing);
 
   display: grid;
-  margin: 0 1rem;
+  margin: 0;
   position: relative;
   place-content: center;
   place-items: center;
