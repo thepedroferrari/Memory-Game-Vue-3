@@ -1,6 +1,7 @@
 <script>
-import { computed } from "@vue/runtime-core";
+import { computed } from "@vue/runtime-core"
 export default {
+  emits: ["select-card"],
   props: {
     value: {
       type: String,
@@ -22,20 +23,19 @@ export default {
 
   setup(props, context) {
     const flippedStyles = computed(() => {
-      if (props.visible) return "is-flipped";
-    });
+      if (props.visible) return "is-flipped"
+    })
     const selectCard = () => {
       context.emit("select-card", {
         position: props.position,
         faceValue: props.value,
-      });
-    };
+      })
+    }
 
-    return { flippedStyles, selectCard };
+    return { flippedStyles, selectCard }
   },
-};
+}
 </script>
-
 
 <template>
   <div class="card" :class="flippedStyles" @click="selectCard">
@@ -46,8 +46,6 @@ export default {
     <div class="card-face is-back"></div>
   </div>
 </template>
-
-
 
 <style>
 .card {
