@@ -1,5 +1,6 @@
 <template>
   <section class="leaderboard-modal">
+    <button @click="toggleLeaderboard(false)">X</button>
     <h3 class="title">Leaderboard</h3>
     <ul class="leaderboard-results">
       <li>
@@ -42,6 +43,12 @@ import "./leaderboard-styles.scss"
 
 export default {
   name: "Leaderboard",
+  props: {
+    toggleLeaderboard: {
+      type: Function,
+      required: true,
+    },
+  },
 
   setup() {
     const leaderboard = ref([])

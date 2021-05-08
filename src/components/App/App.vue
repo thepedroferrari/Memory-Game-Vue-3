@@ -1,4 +1,9 @@
 <template>
+  <header>
+    <button class="default-button" @click="toggleLeaderboard(true)">
+      Leaderboard
+    </button>
+  </header>
   <h1 class="title">Vue Memory Game</h1>
   <transition-group tag="section" class="game-board" name="shuffle-card ">
     <Card
@@ -11,7 +16,10 @@
       @select-card="flipCard"
     />
   </transition-group>
-  <Leaderboard />
+  <Leaderboard
+    v-if="shouldShowLeaderboard"
+    :toggleLeaderboard="toggleLeaderboard"
+  />
   {{ status }}
   <button v-if="isNewPlayer" class="default-button" @click="startGame">
     Start Game
@@ -43,6 +51,11 @@ export default {
     const deck = ref([])
     const matches = ref([])
     const isNewPlayer = ref(true)
+    const shouldShowLeaderboard = ref(false)
+    const toggleLeaderboard = (status) =>
+      status
+        ? (shouldShowLeaderboard.value = status)
+        : (shouldShowLeaderboard.value = !shouldShowLeaderboard.value)
     const status = computed(() => {
       console.log("Read")
       if (remainingPairs.value === 0) {
@@ -144,6 +157,8 @@ export default {
       restartGame,
       startGame,
       isNewPlayer,
+      shouldShowLeaderboard,
+      toggleLeaderboard,
     }
   },
 }
