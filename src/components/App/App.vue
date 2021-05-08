@@ -48,10 +48,15 @@ export default {
   },
 
   setup() {
+    // References
     const deck = ref([])
     const matches = ref([])
     const isNewPlayer = ref(true)
     const shouldShowLeaderboard = ref(false)
+    const clicks = ref(0)
+    const seconds = ref(0)
+
+    // Methods
     const toggleLeaderboard = (status) =>
       status
         ? (shouldShowLeaderboard.value = status)
@@ -79,15 +84,21 @@ export default {
     }
 
     const restartGame = () => {
+      // Shuffle cards again. We have to shuffle them first and then re-assign
+      // the position of the cards otherwise they will have indexes in wrong the
+      // positions.
       shuffleCards()
 
+      // reset references
+      clicks.value = 0
+      seconds.value = 0
+      matches.value.length = 0
       deck.value = deck.value.map((card, index) => ({
         ...card,
         matched: false,
         visible: false,
         position: index,
       }))
-      matches.value.length = 0
     }
 
     cardsDeck.forEach((card, index) => {
@@ -101,7 +112,14 @@ export default {
     })
 
     const flipCard = (payload) => {
-      if (payload.isFlipped) return
+      // Do not continue if the card is already flipped.
+      if (payload.isFlipped) return false
+
+      // The user clicked on a new card, we want to record that action
+      clicks.value += 1
+
+      // If the position and value of the card matches a card on our matches
+      // array, we return true.
       if (
         matches.value.find((card) => {
           return (
@@ -112,7 +130,7 @@ export default {
       ) {
         // user clicked twice in the same card
         // console.log(payload, matches);
-        return
+        return false
       }
 
       deck.value[payload.position].visible = true
