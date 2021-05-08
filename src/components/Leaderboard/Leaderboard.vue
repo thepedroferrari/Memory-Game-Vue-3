@@ -36,7 +36,7 @@
 import { ref } from "vue"
 import { leaderboardRef } from "../../firebase"
 import { sortNumbersBy } from "../../utils"
-import "./styles.scss"
+import "./leaderboard-styles.scss"
 
 export default {
   name: "Leaderboard",

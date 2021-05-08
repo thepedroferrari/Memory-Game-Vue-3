@@ -24,13 +24,13 @@
 <script>
 import { computed, ref, watch } from "vue"
 
-import Card from "./components/Card"
-import Leaderboard from "./components/Leaderboard/Leaderboard"
+import Card from "../Card/Card"
+import Leaderboard from "../Leaderboard/Leaderboard"
 
 import _shuffle from "lodash.shuffle"
-import { cardsDeck } from "./cardsDeck"
-import "./assets/theme.css"
-import "./assets/classes.css"
+import { cardsDeck } from "../../cardsDeck"
+import "../../assets/theme.css"
+import "../../assets/classes.css"
 
 export default {
   name: "App",
