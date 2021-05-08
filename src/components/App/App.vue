@@ -43,7 +43,6 @@ export default {
     const deck = ref([])
     const matches = ref([])
     const isNewPlayer = ref(true)
-    console.log(process.env.VUE_APP_APIKEY)
     const status = computed(() => {
       console.log("Read")
       if (remainingPairs.value === 0) {
@@ -89,9 +88,9 @@ export default {
     })
 
     const flipCard = (payload) => {
+      if (payload.isFlipped) return
       if (
         matches.value.find((card) => {
-          console.log(card, payload)
           return (
             card.position === payload.position &&
             card.faceValue === payload.faceValue
@@ -125,7 +124,7 @@ export default {
             setTimeout(() => {
               deck.value[card1.position].visible = false
               deck.value[card2.position].visible = false
-            }, 500)
+            }, 750)
           }
 
           matches.value.length = 0

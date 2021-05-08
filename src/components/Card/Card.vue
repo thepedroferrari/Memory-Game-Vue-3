@@ -40,6 +40,7 @@ export default {
       context.emit("select-card", {
         position: props.position,
         faceValue: props.value,
+        isFlipped: props.visible,
       })
     }
 
