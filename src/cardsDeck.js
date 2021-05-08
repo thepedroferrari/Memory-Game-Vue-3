@@ -1,0 +1,18 @@
+export const cardsDeck = [
+  "GenZ-card1",
+  "GenZ-card2",
+  "JustCause3-card1",
+  "JustCause3-card2",
+  "JustCause4-card1",
+  "JustCause4-card2",
+  "MadMax-card1",
+  "MadMax-card2",
+  "Rage2-card1",
+  "Rage2-card2",
+  "SecondExtinction-card1",
+  "SecondExtinction-card2",
+  "theHunter-card1",
+  "theHunter-card2",
+  "TheHunter2-card1",
+  "TheHunter2-card2",
+]
