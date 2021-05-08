@@ -18,7 +18,7 @@
   </transition-group>
   <Leaderboard
     v-if="shouldShowLeaderboard"
-    :toggleLeaderboard="toggleLeaderboard"
+    :toggle-Leaderboard="toggleLeaderboard"
   />
   {{ status }}
   <button v-if="isNewPlayer" class="default-button" @click="startGame">
