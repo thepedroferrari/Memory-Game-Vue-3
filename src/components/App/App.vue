@@ -1,5 +1,10 @@
 <template>
   <header>
+    <Timer
+      :seconds="seconds"
+      :add-second="addSecond"
+      :is-game-over="isGameOver"
+    />
     <button class="default-button" @click="toggleLeaderboard(true)">
       Leaderboard
     </button>
@@ -18,10 +23,10 @@
   </transition-group>
   <Leaderboard
     v-if="shouldShowLeaderboard"
-    :toggle-Leaderboard="toggleLeaderboard"
+    :toggle-leaderboard="toggleLeaderboard"
   />
   {{ status }}
-  <button v-if="isNewPlayer" class="default-button" @click="startGame">
+  <button v-if="isNewGame" class="default-button" @click="startGame">
     Start Game
   </button>
   <button v-else class="default-button" @click="restartGame">
@@ -34,36 +39,48 @@ import { computed, ref, watch } from "vue"
 
 import Card from "../Card/Card"
 import Leaderboard from "../Leaderboard/Leaderboard"
+import Timer from "../Timer/Timer"
 
 import _shuffle from "lodash.shuffle"
 import { cardsDeck } from "../../cardsDeck"
 import "../../assets/theme.css"
 import "../../assets/classes.css"
+import "./app.styles.scss"
 
 export default {
   name: "App",
   components: {
     Card,
     Leaderboard,
+    Timer,
   },
 
   setup() {
     // References
     const deck = ref([])
     const matches = ref([])
-    const isNewPlayer = ref(true)
+    const isNewGame = ref(true)
     const shouldShowLeaderboard = ref(false)
     const clicks = ref(0)
     const seconds = ref(0)
+    const isGameOver = ref(true)
 
     // Methods
+    const setGameOver = () => {
+      isGameOver.value = true
+
+      console.log(seconds)
+      console.log(clicks)
+    }
+
     const toggleLeaderboard = (status) =>
       status
         ? (shouldShowLeaderboard.value = status)
         : (shouldShowLeaderboard.value = !shouldShowLeaderboard.value)
+
     const status = computed(() => {
-      console.log("Read")
       if (remainingPairs.value === 0) {
+        setGameOver()
         return "Player Wins!"
       } else {
         return `Remaining Pairs: ${remainingPairs.value}`
@@ -79,8 +96,12 @@ export default {
     }
 
     const startGame = () => {
-      isNewPlayer.value = false
+      isNewGame.value = false
       restartGame()
+    }
+
+    const addSecond = () => {
+      seconds.value += 1
     }
 
     const restartGame = () => {
@@ -90,6 +111,7 @@ export default {
       shuffleCards()
 
       // reset references
+      isGameOver.value = false
       clicks.value = 0
       seconds.value = 0
       matches.value.length = 0
@@ -174,18 +196,13 @@ export default {
       status,
       restartGame,
       startGame,
-      isNewPlayer,
+      isNewGame,
       shouldShowLeaderboard,
       toggleLeaderboard,
+      addSecond,
+      seconds,
+      isGameOver,
     }
   },
 }
 </script>
-
-<style>
-#app {
-  text-align: center;
-
-  margin-top: 60px;
-}
-</style>
