@@ -1,16 +1,40 @@
 <template>
-  <div v-if="isScoreSaved">
-    <h4>Score saved to the leaderboard!</h4>
+  <section class="game-over">
+    <div v-if="isScoreSaved">
+      <h4>Score saved to the leaderboard!</h4>
+      <button class="default-button" @click="restartGame">
+        Start New Game
+      </button>
+    </div>
+    <div v-else>
+      <h4>You finished in {{ seconds }} seconds with {{ clicks }} clicks!</h4>
+      <p>Save your score to the leaderboard</p>
+      <label for="leaderboardName">
+        <p>Your name</p>
+        <input
+          id="leaderboardName"
+          name="leaderboardName"
+          placeholder="Player"
+          maxlength="20"
+          v-model="name"
+        />
+      </label>
 
-    <button @click="restartGame">Start New Game</button>
-  </div>
-  <div v-else>Saved</div>
+      <button class="default-button" type="button" @click="updateLeaderboard">
+        Save score to Leaderboard
+      </button>
+
+      <button class="default-button" type="button" @click="restartGame">
+        New Game without saving
+      </button>
+    </div>
+  </section>
 </template>
 
 <script>
 import { ref, watch } from "vue"
 import { getDeviceType } from "../../utils"
-import { leaderboardRef } from "../../firebase"
+// import { leaderboardRef } from "../../firebase"
 
 export default {
   name: "GameOver",
@@ -33,7 +57,7 @@ export default {
     },
   },
 
-  setup() {
+  setup(props) {
     const isScoreSaved = ref(false)
     const name = ref("Player")
 
@@ -41,10 +65,18 @@ export default {
       isScoreSaved.value = true
       const id = Date.now()
       const device = getDeviceType()
-      const stats = { id, name, device, clicks, score: seconds }
-      await leaderboardRef.add(stats).catch((error) => {
-        throw new Error(`Error adding document: ${error}`)
-      })
+      const stats = {
+        id,
+        name: name.value,
+        device,
+        clicks: props.clicks,
+        score: props.seconds,
+      }
+
+      console.log(stats)
+      // await leaderboardRef.add(stats).catch((error) => {
+      //   throw new Error(`Error adding document: ${error}`)
+      // })
     }
 
     watch(() => {}, { deep: true })
