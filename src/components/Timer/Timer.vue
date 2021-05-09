@@ -1,5 +1,5 @@
 <template>
-  <time>{{ isGameOver ? 0 : seconds }} s</time>
+  <time>{{ seconds }} s</time>
 </template>
 
 <script>
@@ -33,7 +33,7 @@ export default {
           }, 1000)
         }
       } else {
-        clearInterval(interval)
+        clearInterval(interval.value)
       }
     })
   },
