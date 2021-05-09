@@ -34,6 +34,7 @@ export default {
         }
       } else {
         clearInterval(interval.value)
+        timerStarted.value = false
       }
     })
   },
