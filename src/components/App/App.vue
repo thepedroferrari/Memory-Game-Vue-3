@@ -1,15 +1,19 @@
 <template>
-  <header>
+  <header class="main-header">
     <Timer
       :seconds="seconds"
       :add-second="addSecond"
       :is-game-over="isGameOver"
     />
     <button class="default-button" @click="toggleLeaderboard(true)">
-      Leaderboard
+      Show Leaderboard
     </button>
+    <h1 class="title"><span>!!!</span> MATCH-IT <span>!!!</span></h1>
+    <p>
+      A memory game made in Vue 3. <br />Checkout the source code at
+      <a href="https://github.com/thepedroferrari/Memory-Game-Vue-3">GitHub</a>
+    </p>
   </header>
-  <h1 class="title">Vue Memory Game</h1>
   <transition-group tag="section" class="game-board" name="shuffle-card ">
     <Card
       v-for="card in deck"
