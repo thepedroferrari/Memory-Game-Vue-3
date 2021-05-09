@@ -29,6 +29,7 @@
     v-if="shouldShowLeaderboard"
     :toggle-leaderboard="toggleLeaderboard"
   />
+  <GameOver v-if="isGameOver" />
   {{ status }}
   <button v-if="isNewGame" class="default-button" @click="startGame">
     Start Game
@@ -44,6 +45,7 @@ import { computed, ref, watch } from "vue"
 import Card from "../Card/Card"
 import Leaderboard from "../Leaderboard/Leaderboard"
 import Timer from "../Timer/Timer"
+import GameOver from "../GameOver/GameOver"
 
 import _shuffle from "lodash.shuffle"
 import { cardsDeck } from "../../cardsDeck"
@@ -57,6 +59,7 @@ export default {
     Card,
     Leaderboard,
     Timer,
+    GameOver,
   },
 
   setup() {
@@ -72,9 +75,6 @@ export default {
     // Methods
     const setGameOver = () => {
       isGameOver.value = true
-
-      console.log(seconds)
-      console.log(clicks)
     }
 
     const toggleLeaderboard = (status) =>
