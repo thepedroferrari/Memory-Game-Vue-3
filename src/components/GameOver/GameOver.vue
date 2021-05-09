@@ -75,7 +75,6 @@ export default {
         score: props.seconds,
       }
 
-      console.log(stats)
       await leaderboardRef.add(stats).catch((error) => {
         throw new Error(`Error adding document: ${error}`)
       })

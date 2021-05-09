@@ -161,7 +161,6 @@ export default {
         })
       ) {
         // user clicked twice in the same card
-        // console.log(payload, matches);
         return false
       }
 

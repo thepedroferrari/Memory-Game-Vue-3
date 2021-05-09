@@ -53,7 +53,6 @@ export default {
   setup() {
     const leaderboard = ref([])
     const getLeaderboard = async () => {
-      console.log("Getting Leaderboard")
       await leaderboardRef.get().then((res) => {
         const data = res.docs.map((doc) => doc.data())
         leaderboard.value = data
@@ -65,7 +64,6 @@ export default {
           )
           leaderboard.value = newLeaderboard
         }
-        console.log({ data })
       })
     }
 
