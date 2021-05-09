@@ -30,7 +30,7 @@
     :toggle-leaderboard="toggleLeaderboard"
   />
   <GameOver
-    v-if="isGameOver"
+    v-if="isGameOver && clicks"
     :seconds="seconds"
     :clicks="clicks"
     :is-game-over="isGameOver"
@@ -102,9 +102,7 @@ export default {
     )
 
     const shuffleCards = () => {
-      if (false) {
-        deck.value = _shuffle(deck.value)
-      }
+      deck.value = _shuffle(deck.value)
     }
 
     const startGame = () => {

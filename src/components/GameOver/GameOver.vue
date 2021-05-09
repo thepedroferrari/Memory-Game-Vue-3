@@ -32,9 +32,11 @@
 </template>
 
 <script>
-import { ref, watch } from "vue"
+import { ref } from "vue"
 import { getDeviceType } from "../../utils"
-// import { leaderboardRef } from "../../firebase"
+import { leaderboardRef } from "../../firebase"
+
+import "./gameover-styles.scss"
 
 export default {
   name: "GameOver",
@@ -59,7 +61,7 @@ export default {
 
   setup(props) {
     const isScoreSaved = ref(false)
-    const name = ref("Player")
+    const name = ref("")
 
     const updateLeaderboard = async () => {
       isScoreSaved.value = true
@@ -74,12 +76,10 @@ export default {
       }
 
       console.log(stats)
-      // await leaderboardRef.add(stats).catch((error) => {
-      //   throw new Error(`Error adding document: ${error}`)
-      // })
+      await leaderboardRef.add(stats).catch((error) => {
+        throw new Error(`Error adding document: ${error}`)
+      })
     }
-
-    watch(() => {}, { deep: true })
 
     return {
       isScoreSaved,
